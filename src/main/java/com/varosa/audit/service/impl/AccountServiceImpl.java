@@ -34,13 +34,13 @@ public class AccountServiceImpl implements AccountService{
         }
         accounts.setStatus(accountPojo.isStatus());
         accounts.setName(accountPojo.getName());
-            if (accountPojo.getParentId() != null) {
+            if (accountPojo.getParentId() != null && accountPojo.getParentId() != 1 && accountPojo.getParentId() != 2) {
                 Optional<Accounts> acc = repositoryAccounts.findById(accountPojo.getParentId());
                 accounts.setLevel(repositoryAccounts.getLevelByParentId(accountPojo.getParentId()) + 1);
                 accounts.setParentId(acc.get());
             }
             else {
-                throw new Exception("Level 0 Account Can't Be Created");
+                throw new Exception("Level 0 and Level 1 Accounts Can't Be Created");
             }
             Accounts accounts1 = repositoryAccounts.save(accounts);
             String all_parent= repositoryAccounts.getParentColumn(accounts1.getId());
@@ -72,7 +72,8 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Accounts checkit(Long id) throws Exception {
-
+        if(id == null)
+            return null;
         Optional<Accounts> accounts = repositoryAccounts.findById(id);
         if(!accounts.isPresent())
             throw new Exception("Account Not present");

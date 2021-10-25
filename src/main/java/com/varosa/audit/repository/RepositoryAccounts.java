@@ -24,4 +24,7 @@ public interface RepositoryAccounts extends JpaRepository<Accounts, Long> {
 
     @Query(value = "select * from set_parent_column_all(?1)",nativeQuery = true)
     public String getParentColumn(Long id);
+
+    @Query(value = "Select a.name from accounts a where a.id = ?1",nativeQuery = true)
+    public String getNameFromId(Long id);
 }

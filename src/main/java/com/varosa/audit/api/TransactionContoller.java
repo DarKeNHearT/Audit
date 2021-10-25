@@ -26,6 +26,7 @@ public class TransactionContoller extends BaseController {
             return ResponseEntity.ok(successResponse("Transaction Added", transactionSave));
 
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.ok(errorResponse("Error..", e.getMessage()));
         }
     }
